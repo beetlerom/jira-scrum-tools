@@ -24,9 +24,9 @@
 
   <header-directive></header-directive>
 
-  <div ng-view></div>
-
-  <div class="container">Angular seed app: v<span app-version></span></div>
+  <div class="container">
+      <div ng-view></div>
+  </div>
 
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
@@ -36,6 +36,9 @@
   <script src="bower_components/angular-resource/angular-resource.js"></script>
   <script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
   <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+  <script src="bower_components/angular-audio/app/angular.audio.js"></script>
+  <script src="bower_components/underscore/underscore-min.js"></script>
+
   <script src="app.js"></script>
 
   <script src="views/dashboard/dashboard.js"></script>
@@ -45,6 +48,8 @@
 
   <script src="components/jira/jira.js"></script>
   <script src="components/jira/jira-tasks.js"></script>
+  <script src="components/jira/jira-sprints.js"></script>
+  <script src="components/jira/jira-projects.js"></script>
 
   <script src="components/version/version.js"></script>
   <script src="components/version/version-directive.js"></script>

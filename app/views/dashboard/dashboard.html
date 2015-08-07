@@ -1,3 +1,56 @@
-<div class="container">
-    {{task.fields.assignee.displayName}}
+<div ng-if="sprint" class="row">
+    <div class="col-md-6">
+        <ul class="list-group">
+            <li class="list-group-item list-group-item-info">
+                Total number of points this sprint:
+                <span class="pull-right">{{getTotal()}}</span>
+            </li>
+            <li class="list-group-item list-group-item-success">
+                Number of points achieved:
+                <span class="pull-right">{{getTotal('Closed')}}</span>
+            </li>
+            <li class="list-group-item list-group-item-danger">
+                Number of points for next sprint:
+                <span class="pull-right">{{getTotal() - getTotal('Closed')}}</span>
+            </li>
+        </ul>
+        <table class="table">
+            <tr>
+                <td width="50%" class="danger">
+                    <p>Estimation error:</p>
+                    <h2>{{(getTotal() - getTotal('Closed'))/getTotal()*100|number:0}}%</h2>
+                </td>
+                <td width="50%">
+                    <p>Estimation error goal:</p>
+                    <h2><10%</h2>
+                </td>
+            </tr>
+        </table>
+        <div class="progress">
+            <progressbar animate="false" value="getTotal('Closed')/getTotal()*100" type="{{achievement}}">
+                <b>{{getTotal('Closed')/getTotal()*100|number:0}}%</b>
+            </progressbar>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <h4>!closed tasks</h4>
+        <ul class="list-group">
+            <li class="list-group-item" ng-repeat="issue in sprint.issuesData.issues"
+                ng-if="issue.statusName != 'Closed' && issue.typeName == 'Story'">
+                <span class="badge">{{issue.typeName}}</span>
+                <span class="badge">{{issue.estimateStatistic.statFieldValue.value}}</span>
+                {{issue.summary}}
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <button ng-click="clap.paused ? clap.play() : clap.pause()" class="btn btn-success">Houraaay!</button>
+    </div>
+</div>
+
+<div ng-if="!sprint">
+    No active sprints were found.
 </div>

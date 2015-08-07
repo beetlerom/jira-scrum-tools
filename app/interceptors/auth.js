@@ -8,7 +8,10 @@ app.factory('auth', [
             request: function (config) {
 
                 config.headers = config.headers || {};
-                config.headers.Authorization = 'Basic ' + btoa('daniel.ionescu:fanica419');
+
+                //TO DO: move this into a separate configuration service
+                //replace this with your actual username and password :)
+                config.headers.Authorization = 'Basic ' + btoa('username:password');
 
                 return config;
             },

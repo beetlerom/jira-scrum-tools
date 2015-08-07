@@ -8,7 +8,8 @@ var app = angular.module('jiraScrumTools', [
     'jiraScrumTools.version',
     'jiraScrumTools.header',
     'jiraScrumTools.jira',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'ngAudio'
 ]);
 
 app.config([

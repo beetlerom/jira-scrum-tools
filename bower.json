@@ -1,8 +1,7 @@
 {
-  "name": "angular-seed",
-  "description": "A starter project for AngularJS",
-  "version": "0.0.0",
-  "homepage": "https://github.com/angular/angular-seed",
+  "name": "jira-scrum-tools",
+  "description": "A collection of tools for scum masters.",
+  "version": "0.1.3",
   "license": "MIT",
   "private": true,
   "dependencies": {

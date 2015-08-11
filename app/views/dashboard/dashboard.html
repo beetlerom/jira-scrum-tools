@@ -35,20 +35,34 @@
             <tr>
                 <td width="50%" class="danger">
                     <p>Estimation error:</p>
+
                     <h2>{{(getTotal() - getTotal('Closed'))/getTotal()*100|number:0}}%</h2>
                 </td>
                 <td width="50%">
                     <p>Estimation error goal:</p>
+
                     <h2><10%</h2>
                 </td>
             </tr>
         </table>
         <h4>Sprint progress:</h4>
+
         <div class="progress">
             <progressbar animate="false" value="getTotal('Closed')/getTotal()*100" type="{{achievement}}">
                 <b>{{getTotal('Closed')/getTotal()*100|number:0}}%</b>
             </progressbar>
         </div>
+        <hr/>
+        <h2>
+            Meeting timebox:
+            <span ng-if="timer != 900">{{Math.floor(timer/60)}}:{{timer % 60}}</span>
+            <span ng-if="timer == 900">15:00</span>
+            <span class="pull-right">
+                <button ng-click="startTimer()" class="btn btn-default">Start timer</button>
+                <button ng-click="stopTimer()" class="btn btn-info">Stop timer</button>
+            </span>
+        </h2>
+        <hr/>
         <button ng-click="clap.paused ? clap.play() : clap.pause()" class="btn btn-success">Houraaay!</button>
     </div>
 </div>

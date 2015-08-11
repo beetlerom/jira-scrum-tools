@@ -10,8 +10,11 @@ angular.module('jiraScrumTools.dashboard', ['ngRoute'])
     }])
 
     .controller('dashboardCtrl', [
-        '$scope', 'jiraTasks', 'jiraSprints', 'jiraSprintQuery', 'jiraIssues', 'ngAudio', 'jiraProjects',
-        function ($scope, jiraTasks, jiraSprints, jiraSprintQuery, jiraIssues, ngAudio, jiraProjects) {
+        '$scope', 'jiraTasks', 'jiraSprints', 'jiraSprintQuery', 'jiraIssues', 'ngAudio', 'jiraProjects', '$interval',
+        function ($scope, jiraTasks, jiraSprints, jiraSprintQuery, jiraIssues, ngAudio, jiraProjects, $interval) {
+
+            // we add Math to scope so we can use math functions in the template
+            $scope.Math = window.Math;
 
             $scope.achievement = 'success';
             $scope.task = {};
@@ -24,6 +27,7 @@ angular.module('jiraScrumTools.dashboard', ['ngRoute'])
             var projectId = 88;
             var projectName = 'Simpled Cards';
             var activeSprint = undefined;
+            var timer = null;
 
             // TO DO: move audio into a separate audio component
             $scope.clap = ngAudio.load('sounds/clap.mp3');
@@ -32,6 +36,8 @@ angular.module('jiraScrumTools.dashboard', ['ngRoute'])
              * @description Constructor
              */
             function init() {
+
+                $scope.timer = 900;
 
                 jiraIssues.get({sub: 'createmeta'}).then(
                     function(response){
@@ -132,6 +138,25 @@ angular.module('jiraScrumTools.dashboard', ['ngRoute'])
                 }
 
                 return total;
+            };
+
+            $scope.startTimer = function() {
+
+                $scope.timer = 900;
+
+                timer = $interval(function(){
+                    if ($scope.timer < 1) {
+                        $scope.stopTimer();
+                        alert('Time is up, please try to wrap it up!')
+                    } else {
+                        $scope.timer--;
+                    }
+                },1000);
+            };
+
+            $scope.stopTimer = function() {
+                $scope.timer = 900;
+                $interval.cancel(timer);
             };
 
             init();

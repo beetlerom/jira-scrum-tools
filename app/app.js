@@ -12,15 +12,6 @@ var app = angular.module('jiraScrumTools', [
     'ngAudio'
 ]);
 
-/**
- * Just add your USERNAME and PASSWORD
- */
-app.constant('CONFIG', {
-    'BASE_URL': 'https://jira.globalorange.nl/jira/',
-    'USERNAME': 'daniel.ionescu',
-    'PASSWORD': 'fanica419'
-});
-
 app.config([
     '$routeProvider', '$httpProvider',
     function ($routeProvider, $httpProvider) {
@@ -42,6 +33,7 @@ app.config([
 app.run([
     'CONFIG', 'ErrorHandlerService',
     function(CONFIG, ErrorHandlerService) {
+        // if no USERNAME or PASSWORD are defined warn the user
         if (!CONFIG.USERNAME || !CONFIG.PASSWORD) {
             ErrorHandlerService.addAlert({
                 type: 'warning',

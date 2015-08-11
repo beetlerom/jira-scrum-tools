@@ -1,11 +1,11 @@
-angular.module('jiraScrumTools.jira.issues', [])
+angular.module('jiraScrumTools.jira.projects', [])
 
-    .factory('jiraIssues', [
+    .factory('jiraProjects', [
         '$resource', 'CONFIG',
         function ($resource, CONFIG) {
 
             var params = {};
-            var url = CONFIG.BASE_URL + 'rest/api/latest/issue/:id/:sub';
+            var url = CONFIG.BASE_URL + 'rest/api/2/project/:id/:resource';
             var res = $resource(
                 url, params,
                 {
@@ -13,8 +13,9 @@ angular.module('jiraScrumTools.jira.issues', [])
                         method: 'GET',
                         params: {
                             id: '@id',
-                            sub: '@sub'
-                        }
+                            resource: '@resource'
+                        },
+                        isArray: true
                     }
                 }
             );

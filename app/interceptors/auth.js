@@ -9,8 +9,6 @@ app.factory('auth', [
 
                 config.headers = config.headers || {};
 
-                //TO DO: move this into a separate configuration service
-                //replace this with your actual username and password :)
                 config.headers.Authorization = 'Basic ' + btoa(CONFIG.USERNAME + ':' + CONFIG.PASSWORD);
 
                 return config;

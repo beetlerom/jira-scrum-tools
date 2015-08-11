@@ -1,13 +1,13 @@
 angular.module('jiraScrumTools.jira.sprintquery', [])
 
     .factory('jiraSprintQuery', [
-        '$resource',
-        function ($resource) {
+        '$resource', 'CONFIG',
+        function ($resource, CONFIG) {
 
             var params = {};
+            var url = CONFIG.BASE_URL + 'rest/greenhopper/latest/sprintquery/:id';
             var res = $resource(
-                'https://jira.globalorange.nl/jira/rest/greenhopper/latest/sprintquery/:id',
-                params,
+                url, params,
                 {
                     getSingle: {
                         method: 'GET',

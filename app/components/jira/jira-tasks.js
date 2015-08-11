@@ -1,13 +1,13 @@
 angular.module('jiraScrumTools.jira.tasks', [])
 
     .factory('jiraTasks', [
-        '$resource',
-        function ($resource) {
+        '$resource', 'CONFIG',
+        function ($resource, CONFIG) {
 
             var params = {};
+            var url = CONFIG.BASE_URL + 'rest/api/latest/issue/:id';
             var res = $resource(
-                'https://jira.globalorange.nl/jira/rest/api/latest/issue/:id',
-                params,
+                url, params,
                 {
                     getSingle: {
                         method: 'GET',

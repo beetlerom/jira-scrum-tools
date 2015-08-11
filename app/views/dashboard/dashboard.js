@@ -10,13 +10,14 @@ angular.module('jiraScrumTools.dashboard', ['ngRoute'])
     }])
 
     .controller('dashboardCtrl', [
-        '$scope', 'jiraTasks', 'jiraSprints', 'jiraSprintQuery', 'jiraIssues', 'ngAudio',
-        function ($scope, jiraTasks, jiraSprints, jiraSprintQuery, jiraIssues, ngAudio) {
+        '$scope', 'jiraTasks', 'jiraSprints', 'jiraSprintQuery', 'jiraIssues', 'ngAudio', 'jiraProjects',
+        function ($scope, jiraTasks, jiraSprints, jiraSprintQuery, jiraIssues, ngAudio, jiraProjects) {
 
             $scope.achievement = 'success';
             $scope.task = {};
             $scope.project = null;
             $scope.sprint = null;
+            $scope.states = null;
             $scope.issueType = null;
 
             // TO DO: make this configurable
@@ -38,13 +39,23 @@ angular.module('jiraScrumTools.dashboard', ['ngRoute'])
                             for (var i in response.projects) {
                                 if (response.projects[i].name == projectName) {
                                     $scope.project = response.projects[i];
+                                    $scope.project.issuetypes.unshift({name: 'All'});
                                     $scope.issueType = $scope.project.issuetypes[0];
                                 }
                             }
 
                             if (!$scope.project) {
                                 alert('Project ' + projectName + ' was not found!')
+                            } else {
+                                jiraProjects.get({id: $scope.project.id, resource: 'statuses'}).then(
+                                    function (response) {
+                                        $scope.states = response[0].statuses;
+                                        $scope.states.unshift({name:'All'});
+                                        $scope.issueState = $scope.states[0];
+                                    }
+                                )
                             }
+
                         } else {
                             alert('No projects were found');
                         }
@@ -72,6 +83,7 @@ angular.module('jiraScrumTools.dashboard', ['ngRoute'])
                         }
                     }
                 );
+
             }
 
             /**

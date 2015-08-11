@@ -1,5 +1,22 @@
 <div ng-if="sprint" class="row">
     <div class="col-md-6">
+        <h5>
+            Show
+            <select ng-model="issueType" ng-options="issue as issue.name for issue in project.issuetypes"></select>
+            <select ng-model="issueState" ng-options="state as state.name for state in states"></select>
+        </h5>
+        <ul class="list-group">
+            <li class="list-group-item"
+                ng-repeat="issue in issues = (sprint.issuesData.issues |
+                filter:(issueType.name != 'All') && { typeName : issueType.name||undefined } |
+                filter:(issueState.name != 'All') && { statusName : issueState.name||undefined })">
+                <span class="badge">{{issue.typeName}}</span>
+                <span class="badge">{{issue.estimateStatistic.statFieldValue.value}}</span>
+                {{issue.summary}}
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-6">
         <ul class="list-group">
             <li class="list-group-item list-group-item-info">
                 Total number of points this sprint:
@@ -32,21 +49,6 @@
                 <b>{{getTotal('Closed')/getTotal()*100|number:0}}%</b>
             </progressbar>
         </div>
-    </div>
-    <div class="col-md-6">
-        <h5>Show <select ng-model="issueType" ng-options="issue as issue.name for issue in project.issuetypes"></select></h5>
-        <ul class="list-group">
-            <li class="list-group-item" ng-repeat="issue in issues = (sprint.issuesData.issues | filter:{ typeName : issueType.name })">
-                <span class="badge">{{issue.typeName}}</span>
-                <span class="badge">{{issue.estimateStatistic.statFieldValue.value}}</span>
-                {{issue.summary}}
-            </li>
-        </ul>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-12">
         <button ng-click="clap.paused ? clap.play() : clap.pause()" class="btn btn-success">Houraaay!</button>
     </div>
 </div>

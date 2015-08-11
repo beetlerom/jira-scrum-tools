@@ -10,15 +10,19 @@ angular.module('jiraScrumTools.dashboard', ['ngRoute'])
     }])
 
     .controller('dashboardCtrl', [
-        '$scope', 'jiraTasks', 'jiraSprints', 'jiraProjects', 'ngAudio',
-        function ($scope, jiraTasks, jiraSprints, jiraProjects, ngAudio) {
+        '$scope', 'jiraTasks', 'jiraSprints', 'jiraSprintQuery', 'jiraIssues', 'ngAudio',
+        function ($scope, jiraTasks, jiraSprints, jiraSprintQuery, jiraIssues, ngAudio) {
 
             $scope.achievement = 'success';
             $scope.task = {};
+            $scope.project = null;
             $scope.sprint = null;
+            $scope.issueType = null;
 
             // TO DO: make this configurable
             var projectId = 88;
+            var projectName = 'Simpled Cards';
+            var activeSprint = undefined;
 
             // TO DO: move audio into a separate audio component
             $scope.clap = ngAudio.load('sounds/clap.mp3');
@@ -28,14 +32,39 @@ angular.module('jiraScrumTools.dashboard', ['ngRoute'])
              */
             function init() {
 
-                jiraProjects.getSingle({id: projectId}).then(
+                jiraIssues.get({sub: 'createmeta'}).then(
+                    function(response){
+                        if (response.projects) {
+                            for (var i in response.projects) {
+                                if (response.projects[i].name == projectName) {
+                                    $scope.project = response.projects[i];
+                                    $scope.issueType = $scope.project.issuetypes[0];
+                                }
+                            }
+
+                            if (!$scope.project) {
+                                alert('Project ' + projectName + ' was not found!')
+                            }
+                        } else {
+                            alert('No projects were found');
+                        }
+                    }
+                );
+
+                jiraSprintQuery.getSingle({id: projectId}).then(
                     function(response) {
                         if (response.sprints) {
-                            $scope.sprint = _.find(response.sprints, function(item) {
+                            activeSprint = _.find(response.sprints, function(item) {
                                return item.state == 'ACTIVE';
                             });
-                            if (!$scope.sprint) {
+                            if (!activeSprint) {
                                 alert('No active sprints were found for the project.')
+                            } else {
+                                jiraSprints.getSingle({rapidViewId: projectId}).then(
+                                    function(response) {
+                                        $scope.sprint = response;
+                                    }
+                                );
                             }
                         } else {
                             // TO DO: add error handler service

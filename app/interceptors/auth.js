@@ -1,8 +1,8 @@
 'use strict';
 
 app.factory('auth', [
-    '$q',
-    function ($q) {
+    '$q', 'ErrorHandlerService', 'CONFIG',
+    function ($q, ErrorHandlerService, CONFIG) {
 
         return {
             request: function (config) {
@@ -11,12 +11,24 @@ app.factory('auth', [
 
                 //TO DO: move this into a separate configuration service
                 //replace this with your actual username and password :)
-                config.headers.Authorization = 'Basic ' + btoa('username:password');
+                config.headers.Authorization = 'Basic ' + btoa(CONFIG.USERNAME + ':' + CONFIG.PASSWORD);
 
                 return config;
             },
-            response: function (response) {
+            requestError: function(rejection) {
+                return $q.reject(rejection);
+            },
+            response: function(response) {
                 return response || $q.when(response);
+            },
+            responseError: function(rejection) {
+                if (rejection.status === 403) {
+                    ErrorHandlerService.addAlert({
+                        type: 'danger',
+                        msg: 'User is not authenticated.'
+                    });
+                }
+                return $q.reject(rejection);
             }
         };
     }

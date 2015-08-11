@@ -25,6 +25,7 @@
   <header-directive></header-directive>
 
   <div class="container">
+      <error-message></error-message>
       <div ng-view></div>
   </div>
 
@@ -49,11 +50,12 @@
   <script src="components/jira/jira.js"></script>
   <script src="components/jira/jira-tasks.js"></script>
   <script src="components/jira/jira-sprints.js"></script>
-  <script src="components/jira/jira-projects.js"></script>
+  <script src="components/jira/jira-sprintquerry.js"></script>
+  <script src="components/jira/jira-issues.js"></script>
 
-  <script src="components/version/version.js"></script>
-  <script src="components/version/version-directive.js"></script>
-  <script src="components/version/interpolate-filter.js"></script>
+  <script src="components/error-handler/error-handler.js"></script>
+  <script src="components/error-handler/error-handler-service.js"></script>
+  <script src="components/error-handler/error-handler-directive.js"></script>
 
   <script src="interceptors/auth.js"></script>
 </body>

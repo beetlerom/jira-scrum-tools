@@ -1,26 +1,27 @@
-angular.module('jiraScrumTools.jira.projects', [])
+angular.module('jiraScrumTools.jira.issues', [])
 
-    .factory('jiraProjects', [
+    .factory('jiraIssues', [
         '$resource',
         function ($resource) {
 
             var params = {};
             var res = $resource(
-                'https://jira.globalorange.nl/jira/rest/greenhopper/latest/sprintquery/:id',
+                'https://jira.globalorange.nl/jira/rest/api/latest/issue/:id/:sub',
                 params,
                 {
-                    getSingle: {
+                    get: {
                         method: 'GET',
                         params: {
-                            id: '@id'
+                            id: '@id',
+                            sub: '@sub'
                         }
                     }
                 }
             );
 
             return {
-                getSingle: function (p) {
-                    return res.getSingle(p).$promise;
+                get: function (p) {
+                    return res.get(p).$promise;
                 }
             };
         }

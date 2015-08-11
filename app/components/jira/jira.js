@@ -5,6 +5,7 @@ angular.module(
     [
         'jiraScrumTools.jira.tasks',
         'jiraScrumTools.jira.sprints',
-        'jiraScrumTools.jira.projects'
+        'jiraScrumTools.jira.sprintquery',
+        'jiraScrumTools.jira.issues'
     ]
 );

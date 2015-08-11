@@ -26,6 +26,7 @@
                 </td>
             </tr>
         </table>
+        <h4>Sprint progress:</h4>
         <div class="progress">
             <progressbar animate="false" value="getTotal('Closed')/getTotal()*100" type="{{achievement}}">
                 <b>{{getTotal('Closed')/getTotal()*100|number:0}}%</b>
@@ -33,10 +34,9 @@
         </div>
     </div>
     <div class="col-md-6">
-        <h4>!closed tasks</h4>
+        <h5>Show <select ng-model="issueType" ng-options="issue as issue.name for issue in project.issuetypes"></select></h5>
         <ul class="list-group">
-            <li class="list-group-item" ng-repeat="issue in sprint.issuesData.issues"
-                ng-if="issue.statusName != 'Closed' && issue.typeName == 'Story'">
+            <li class="list-group-item" ng-repeat="issue in issues = (sprint.issuesData.issues | filter:{ typeName : issueType.name })">
                 <span class="badge">{{issue.typeName}}</span>
                 <span class="badge">{{issue.estimateStatistic.statFieldValue.value}}</span>
                 {{issue.summary}}

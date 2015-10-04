@@ -11,6 +11,9 @@
     "angular-mocks": "~1.4.0",
     "html5-boilerplate": "~5.2.0",
     "angular-audio": "~1.7.0",
-    "underscore": "~1.8.3"
+    "underscore": "~1.8.3",
+    "angular-bootstrap": "~0.13.4",
+    "angular-resource": "~1.4.7",
+    "bootstrap": "~3.3.5"
   }
 }

@@ -37,7 +37,7 @@ app.run([
         if (!CONFIG.USERNAME || !CONFIG.PASSWORD) {
             ErrorHandlerService.addAlert({
                 type: 'warning',
-                msg: 'Please make sure username and password are configured in app.js.'
+                msg: 'Please make sure username and password are configured in app.config.js.'
             });
         }
     }
